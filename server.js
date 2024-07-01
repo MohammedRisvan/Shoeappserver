@@ -4,7 +4,7 @@ const dotenv=require('dotenv')
 const cookieParser=require("cookie-parser");
 const mongoose=require('mongoose')
 const authRoute=require("./routes/users.js");
-
+const shoesRoute=require("./routes/Shoesroute.js")
 
 app.use(cookieParser())
 
@@ -30,7 +30,7 @@ mongoose.connection.on("disconnected",()=>{
 }) 
 
 app.use("/api/auth",authRoute)
-
+app.use("/api/product",shoesRoute)
 
 
 app.use((err,req,res,next)=>{

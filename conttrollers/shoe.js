@@ -1,6 +1,6 @@
 const Shoe = require("../model/Shoe");
 const Shoes=require("../model/Shoe");
-
+const {createError}= require('../utils/error')
 
 
 
@@ -15,14 +15,14 @@ const AddShoe=async(req,res,next)=>{
 
 
 //update Shoes
-const UpdateShoes=async(req,res,next)=>{
+const UpdateShoe=async(req,res,next)=>{
 try{
-    const UpdateShoes=await Shoes.findByIdAndUpdate(
+    const updateShoe=await Shoes.findByIdAndUpdate(
         req.params.id,
         {$set:req.body},
         {new:true}
     )
-    res.status(200).json(UpdateShoes);
+    res.status(200).json(updateShoe);
 }catch(err){next(err)}
 }
 
@@ -52,7 +52,9 @@ catch(err){next(err)}
 //Get a specifc shoe
 const GetOneShoe=async(req,res,next)=>{
 try{
-
+const Shoe=await Shoes.findById(req.params.id)
+if(!Shoe){next(createError(404,"product not found"))}
+res.status(200).json(Shoe)
 }catch(err){
     next(err)
 }
@@ -63,5 +65,6 @@ module.exports={
     GetShoes,
     GetOneShoe,
     AddShoe,
-    UpdateShoes
+    UpdateShoe,
+    DeleteShoes
 }
