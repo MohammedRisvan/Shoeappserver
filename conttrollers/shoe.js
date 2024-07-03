@@ -1,5 +1,5 @@
-const Shoe = require("../model/Shoe");
-const Shoes=require("../model/Shoe");
+// const Shoe = require("../model/Shoe");
+const Shoes=require("../model/Shoe.js");
 const {createError}= require('../utils/error')
 
 
@@ -7,7 +7,7 @@ const {createError}= require('../utils/error')
 //Add Shoe
 const AddShoe=async(req,res,next)=>{
     try{
-        const shoe= new Shoe(req.body)
+        const shoe= new Shoes(req.body)
     const saveShoes=await shoe.save()
         res.status(200).json({success:true,saveShoes})
     }catch(err){next(err)}

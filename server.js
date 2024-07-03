@@ -5,13 +5,7 @@ const cookieParser=require("cookie-parser");
 const mongoose=require('mongoose')
 const authRoute=require("./routes/users.js");
 const shoesRoute=require("./routes/Shoesroute.js")
-
-app.use(cookieParser())
-
-dotenv.config({path:"./.env"})
-
-app.use(cookieParser());
-// app.use(express.json())
+const cors=require("cors")
 
 const connect=async()=>{
     try{
@@ -28,6 +22,13 @@ mongoose.connection.on("connected",()=>{
 mongoose.connection.on("disconnected",()=>{
     console.log("Mongodb disconnected")
 }) 
+
+app.use(cors())
+dotenv.config({path:"./.env"})
+//Middleware
+app.use(cookieParser());
+app.use(express.json())
+
 
 app.use("/api/auth",authRoute)
 app.use("/api/product",shoesRoute)

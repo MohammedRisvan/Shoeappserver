@@ -18,10 +18,10 @@ next(err)
 
 //User Register
 const register=async(req,res,next)=>{
+    
     try{
         const salt=bcrypt.genSaltSync(10);
         const hash=bcrypt.hashSync(req.body.password,salt)
-        console.log(hash);
         const newUser=new Users({
             username:req.body.username,
             email:req.body.email,
@@ -36,16 +36,17 @@ const register=async(req,res,next)=>{
 
 // UserLogin
 const login=async(req,res,next)=>{
+
 try{
     const user=await Users.findOne({username:req.body.username});
     if(!user){return next(createError(404,"User Not Found!"))}
     const truePassword=await bcrypt.compare(req.body.password,user.password)
     if(!truePassword){return next(createError(400,"Wrong username or password!"))}
-    const token=jwt.sign({id:user._id,isAdmin:user.isAdmin},process.env.JWT);
+    const token=jwt.sign({id:user._id,isAdmin:user.isAdmin},process.env.JWT,{expiresIn: '1h' });
     const {password,isAdmin,...othersDetailes}=user._doc;
     return res.cookie("shoeshopeaccess_token",token);
-
-}catch(err){ 
+}
+catch(err){  
     next(err)}
 }
 
