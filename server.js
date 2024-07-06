@@ -4,8 +4,9 @@ const dotenv=require('dotenv')
 const cookieParser=require("cookie-parser");
 const mongoose=require('mongoose')
 const authRoute=require("./routes/users.js");
-const shoesRoute=require("./routes/Shoesroute.js")
-const cors=require("cors")
+const shoesRoute=require("./routes/Shoesroute.js");
+const cors=require("cors");
+
 
 const connect=async()=>{
     try{
